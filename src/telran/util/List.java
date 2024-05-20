@@ -32,7 +32,7 @@ public interface List<T> extends Collection<T> {
 	 * @return index for first occurrence of an object equaled to a given pattern
 	 * otherwise -1
 	 */
-	int indedxOf(T pattern) ;
+	int indexOf(T pattern) ;
 	/******************************************************/
 	/**
 	 * 
@@ -40,5 +40,5 @@ public interface List<T> extends Collection<T> {
 	 * @return index for last occurrence of an object equaled to a given pattern
 	 * otherwise -1
 	 */
-	int lastIndedxOf(T pattern) ;
+	int lastIndexOf(T pattern) ;
 }
