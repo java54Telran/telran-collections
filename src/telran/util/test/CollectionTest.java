@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.Random;
 
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import telran.util.Collection;
@@ -66,13 +68,17 @@ public abstract class CollectionTest {
 		assertEquals(numbers.length, collection.size());
 	}
 	@Test
+	
 	void performanceAddTest() {
 		Random random = new Random();
 		int[] randomNumbers = random.ints().distinct().limit(N_ELEMENTS).toArray();
+		for(Integer num: numbers) {
+			collection.remove(num);
+		}
 		for(int i = 0; i < N_ELEMENTS; i++) {
 			collection.add(randomNumbers[i]);
 		}
-		assertEquals(N_ELEMENTS + numbers.length, collection.size());
+		assertEquals(N_ELEMENTS, collection.size());
 		for(int i = 0; i < N_RUNS; i++) {
 			collection.contains(random.nextInt());
 		}
