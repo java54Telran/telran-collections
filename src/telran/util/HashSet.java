@@ -51,11 +51,9 @@ public class HashSet<T> implements Set<T> {
 				iteratorIndex++;
 				iterator = getIterator(iteratorIndex);
 			}
-			if (iteratorIndex == limit) {
-				iterator = getIterator(iteratorIndex);
+			if (iteratorIndex == limit && (hashTable[iteratorIndex] == null || !iterator.hasNext())) {
 				iteratorIndex++;
 			}
-
 		}
 
 	}
@@ -156,6 +154,5 @@ public class HashSet<T> implements Set<T> {
 		}
 		return res;
 	}
-	
 
 }
