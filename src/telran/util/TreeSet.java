@@ -79,8 +79,12 @@ private class TreeSetIterator implements Iterator<T> {
 	}
 
 	private Node<T> getFirstGreaterParent(Node<T> current) {
-		// TODO Auto-generated method stub
-		return null;
+		Node<T> parent = current.parent;
+		while(parent != null && parent.right == current) {
+			current = current.parent;
+			parent = current.parent;
+		}
+		return parent;
 	}
 	private Node<T> getLeastFrom(Node<T> node) {
 		if (node != null) {
@@ -144,10 +148,42 @@ private class TreeSetIterator implements Iterator<T> {
 	}
 
 	private void removeNode(Node<T> node) {
-		// TODO Auto-generated method stub
+		if(node.left != null && node.right != null) {
+			removeJunction(node);
+		} else {
+			removeNonJunction(node);
+		}
 		
+		size--;
 	}
 
+	private void setNulls(Node<T> node) {
+		node.data = null;
+		node.parent = node.left = node.right = null;
+		
+	}
+	private void removeJunction(Node<T> node) {
+		Node<T> substitute = getGreatestFrom(node.left);
+		node.data = substitute.data;
+		removeNonJunction(substitute);
+		
+	}
+	private void removeNonJunction(Node<T> node) {
+		Node<T> parent = node.parent;
+		Node<T> child = node.left != null ? node.left : node.right;
+		if(parent == null) {
+			root = child; //physical root removing
+		} else if(node == parent.left) {
+			parent.left = child;
+		} else {
+			parent.right = child;
+		}
+		if(child != null) {
+			child.parent = parent;
+		}
+		setNulls(node);
+		
+	}
 	@Override
 	public boolean contains(T pattern) {
 		
@@ -175,10 +211,10 @@ private class TreeSetIterator implements Iterator<T> {
 	@Override
 	public T last() {
 		
-		return root == null ? null : getGreatesFrom(root).data;
+		return root == null ? null : getGreatestFrom(root).data;
 	}
 
-	private Node<T> getGreatesFrom(Node<T> node) {
+	private Node<T> getGreatestFrom(Node<T> node) {
 		if(node != null) {
 			while(node.right != null) {
 				node = node.right;
