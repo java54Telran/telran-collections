@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 	private static final int DEFAULT_CAPACITY = 16;
@@ -17,6 +18,7 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 	}
 	private class ArrayListIterator implements Iterator<T> {
 		int currentIndex = 0;
+		boolean flNext = false;
 		@Override
 		public boolean hasNext() {
 			return currentIndex < size;
@@ -27,7 +29,16 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 			if(!hasNext()) {
 				throw new NoSuchElementException();
 			}
+			flNext = true;
 			return array[currentIndex++];
+		}
+		@Override
+		public void remove() {
+			if(!flNext) {
+				throw new IllegalStateException();
+			}
+			ArrayList.this.remove(--currentIndex);
+			flNext = false;
 		}
 		
 	}
@@ -39,6 +50,13 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 		allocateIfNeeded();
 		array[size++] = obj;
 		return true;
+	}
+	@Override
+	public boolean removeIf(Predicate<T> predicate) {
+		//TODO
+		//Two indexes on one array
+		//no allocation for new array
+		return false;
 	}
 
 	

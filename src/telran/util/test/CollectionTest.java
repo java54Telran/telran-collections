@@ -1,14 +1,18 @@
 package telran.util.test;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Random;
-
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import telran.util.Collection;
 import telran.util.List;
@@ -27,7 +31,25 @@ public abstract class CollectionTest {
 	}
 	@Test
 	void iteratorTest() {
+		
 		runTest(numbers);
+		Iterator<Integer> it = collection.iterator();
+		assertThrowsExactly(IllegalStateException.class,
+				() -> it.remove());
+		Integer num = null;
+		while(it.hasNext()) {
+			num = it.next();
+		}
+		assertThrowsExactly(NoSuchElementException.class,
+				() -> it.next());
+		it.remove();
+		assertFalse(collection.contains(num));
+		assertEquals(numbers.length - 1, collection.size());
+		//two remove calls with no iterating must throw IllegalStateException
+		assertThrowsExactly(IllegalStateException.class, 
+				() -> it.remove());
+		
+		
 	}
 	@Test
 	void addEqualedTest() {
@@ -72,13 +94,7 @@ public abstract class CollectionTest {
 	
 	void performanceAddContainsIteratorTest() {
 		Random random = new Random();
-		int[] randomNumbers = random.ints().distinct().limit(N_ELEMENTS).toArray();
-		for(Integer num: numbers) {
-			collection.remove(num);
-		}
-		for(int i = 0; i < N_ELEMENTS; i++) {
-			collection.add(randomNumbers[i]);
-		}
+		createBigRandomCollection(random);
 		assertEquals(N_ELEMENTS, collection.size());
 		Integer [] actual = new Integer[N_ELEMENTS];
 		int index = 0;
@@ -94,6 +110,33 @@ public abstract class CollectionTest {
 		}
 		}
 		
-		
 	}
+	private void createBigRandomCollection(Random random) {
+		int[] randomNumbers = random.ints().distinct().limit(N_ELEMENTS).toArray();
+		for(Integer num: numbers) {
+			collection.remove(num);
+		}
+		for(int i = 0; i < N_ELEMENTS; i++) {
+			collection.add(randomNumbers[i]);
+		}
+	}
+	@Test
+	void removeIfTest() {
+		assertTrue(collection.removeIf(n -> n % 2 == 0));
+		assertTrue(collection.stream().allMatch(n -> n % 2 != 0));
+		assertFalse(collection.removeIf(n -> n % 2 == 0));
+	}
+	@Test
+	void clearTest() {
+		collection.clear();
+		assertEquals(0, collection.size());
+	}
+	@Test
+	@Timeout(value = 5, unit = TimeUnit.SECONDS,
+	threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+	void performanceClearTest() {
+		createBigRandomCollection(new Random());
+		collection.clear();
+	}
+	
 }

@@ -54,6 +54,10 @@ public class HashSet<T> extends AbstractCollection<T> implements Set<T> {
 				iteratorIndex++;
 			}
 		}
+		@Override
+		public void remove() {
+			//TODO
+		}
 
 	}
 

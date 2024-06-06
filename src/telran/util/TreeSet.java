@@ -32,6 +32,10 @@ private class TreeSetIterator implements Iterator<T> {
 		current = getCurrent(current);
 		return res;
 	}
+	@Override
+	public void remove() {
+		//TODO
+	}
 	
 }
 	Node<T> root;
@@ -71,7 +75,6 @@ private class TreeSetIterator implements Iterator<T> {
 	}
 
 	public Node<T> getCurrent(Node<T> current) {
-		// TODO Auto-generated method stub
 		//Algorithm see on the board
 		return current.right != null ? getLeastFrom(current.right) :
 			getFirstGreaterParent(current);

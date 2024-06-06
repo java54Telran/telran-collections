@@ -43,6 +43,10 @@ public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
 			current = current.next;
 			return res;
 		}
+		@Override
+		public void remove() {
+			//TODO
+		}
 		
 	}
 	@Override
