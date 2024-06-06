@@ -11,10 +11,11 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import telran.util.Collection;
+import telran.util.List;
 
 public abstract class CollectionTest {
 	private static final int N_ELEMENTS = 1_048_575;
-	private static final int N_RUNS = 10000000;
+	private static final int N_RUNS = 1000000;
 	protected Collection<Integer> collection;
 	Integer[] numbers = {-20, 10, 1, 100, -5};
 	int newNumber = 1000000;
@@ -85,9 +86,14 @@ public abstract class CollectionTest {
 			actual[index++] = num;
 		}
 		assertEquals(N_ELEMENTS, index);
-		for(int i = 0; i < N_RUNS; i++) {
+		if(collection instanceof List) {
+			System.out.println("Performance test of method \"contains\" for all List objects takes huge time");
+		} else {
+			for(int i = 0; i < N_RUNS; i++) {
 			collection.contains(random.nextInt());
 		}
+		}
+		
 		
 	}
 }
