@@ -53,10 +53,24 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 	}
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
-		//TODO
+		
 		//Two indexes on one array
 		//no allocation for new array
-		return false;
+		int indexDest = 0;
+		Predicate<T> negatePred = predicate.negate();
+		int oldSize = size;
+		for(int i = 0; i < size; i++) {
+			//moving not removed elements
+			if(negatePred.test(array[i])) {
+				array[indexDest++] = array[i];
+			}
+		}
+		for(int i = indexDest; i < size; i++) {
+			//putting null's to removed elements
+			array[i] = null;
+		}
+		size = indexDest;
+		return size < oldSize;
 	}
 
 	

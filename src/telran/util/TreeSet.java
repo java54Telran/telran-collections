@@ -17,6 +17,7 @@ private static class Node<T> {
 }
 private class TreeSetIterator implements Iterator<T> {
 	Node<T> current = getLeastFrom(root);
+	Node<T> prev;
 	@Override
 	public boolean hasNext() {
 		
@@ -28,13 +29,17 @@ private class TreeSetIterator implements Iterator<T> {
 		if(!hasNext()) {
 			throw new NoSuchElementException();
 		}
-		T res = current.data;
+		prev = current;
 		current = getCurrent(current);
-		return res;
+		return prev.data;
 	}
 	@Override
 	public void remove() {
-		//TODO
+		if(prev == null) {
+			throw new IllegalStateException();
+		}
+		removeNode(prev);
+		prev = null;
 	}
 	
 }
