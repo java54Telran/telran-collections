@@ -225,5 +225,43 @@ private class TreeSetIterator implements Iterator<T> {
 		}
 		return node;
 	}
+	@Override
+	/**
+	 * Returns the greatest element in this set less than 
+	 * or equal to the given element,
+	 *  or null if there is no such element
+	 */
+	public T floor(T key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	/**
+	 * Returns the least element in this set greater than 
+	 * or equal to the given element,
+	 *  or null if there is no such element
+	 */
+	public T ceiling(T key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/**
+	 * display tree in the following form:
+	 *  -20
+	 *     10
+	 *        1
+	 *           -5
+	 *        100
+	 */
+	public void displayRootChildren() {
+		//TODO
+	}
+	/*****************************************/
+	/**
+	 * conversion of tree so that iterating has been in the inversive order
+	 */
+	public void treeInversion() {
+		//TODO
+	}
 
 }
