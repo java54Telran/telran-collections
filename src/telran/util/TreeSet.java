@@ -43,8 +43,16 @@ private class TreeSetIterator implements Iterator<T> {
 	}
 	
 }
+private static final int DEFAULT_SPACES_PER_LEVEL = 2;
 	Node<T> root;
 	private Comparator<T> comp;
+	private int spacesPerLevel = DEFAULT_SPACES_PER_LEVEL;
+	public int getSpacesPerLevel() {
+		return spacesPerLevel;
+	}
+	public void setSpacesPerLevel(int spacesPerLevel) {
+		this.spacesPerLevel = spacesPerLevel;
+	}
 	public TreeSet(Comparator<T> comp) {
 		this.comp = comp;
 	}
@@ -263,5 +271,67 @@ private class TreeSetIterator implements Iterator<T> {
 	public void treeInversion() {
 		//TODO
 	}
+	/**
+	 * displays tree in the following form
+	 *           100
+	 *         10
+	 *           1
+	 *              -5
+	 *   -20           
+	 */
+	public void displayTreeRotated() {
+		displayTreeRotated(root, 1);
+	}
+	private void displayTreeRotated(Node<T> tmpRoot, int level) {
+		if (tmpRoot != null) {
+			displayTreeRotated(tmpRoot.right, level + 1);
+			displayRoot(tmpRoot, level);
+			displayTreeRotated(tmpRoot.left, level + 1);
+		}
+		
+	}
+	private void displayRoot(Node<T> tmpRoot, int level) {
+		System.out.printf("%s", " ".repeat(level * spacesPerLevel ));
+		System.out.println(tmpRoot.data);
+		
+	}
+	/**
+	 * 
+	 * @return number of leaves (leaf - node with both left and right nulls)
+	 */
+	public int width() {
+		
+		return width(root);
+	}
+	private int width(Node<T> tmpRoot) {
+		int res = 0;
+		if(tmpRoot != null) {
+			if(tmpRoot.left == null && tmpRoot.right == null) {
+				res = 1;
+			} else {
+				res = width(tmpRoot.left) + width(tmpRoot.right);
+			}
+		}
+		return res;
+	}
+	/****************************************/
+	/**
+	 * 
+	 * @return number of the nodes of the longest line
+	 */
+	public int height() {
+		
+		return height(root);
+	}
+	private int height(Node<T> tmpRoot) {
+		int res = 0;
+		if (tmpRoot != null) {
+			int heightLeft = height(tmpRoot.left);
+			int heightRight = height(tmpRoot.right);
+			res = Math.max(heightLeft, heightRight) + 1;
+		}
+		return res;
+	}
+	
 
 }

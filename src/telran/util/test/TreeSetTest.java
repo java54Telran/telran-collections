@@ -33,4 +33,18 @@ public class TreeSetTest extends SortedSetTest {
 		assertArrayEquals(expected, actual);
 		assertTrue(treeSet.contains(100));
 	}
+	@Test
+	void displayTreeRotatedTest() {
+		treeSet.setSpacesPerLevel(4);
+		treeSet.displayTreeRotated();
+	}
+	@Test
+	void widthTest() {
+		assertEquals(2, treeSet.width());
+		
+	}
+	@Test
+	void heightTest() {
+		assertEquals(4, treeSet.height());
+	}
 }
