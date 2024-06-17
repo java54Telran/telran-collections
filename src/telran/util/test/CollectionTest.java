@@ -18,7 +18,7 @@ import telran.util.Collection;
 import telran.util.List;
 
 public abstract class CollectionTest {
-	private static final int N_ELEMENTS = 1_048_575;
+	protected static final int N_ELEMENTS = 1_048_575;
 	private static final int N_RUNS = 1000000;
 	protected Collection<Integer> collection;
 	Integer[] numbers = {-20, 10, 1, 100, -5};

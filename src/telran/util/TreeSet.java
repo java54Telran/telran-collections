@@ -300,6 +300,7 @@ private static final int SEPARATOR_LENGTH = 20;
 			swapLeftRight(tmpRoot);
 			treeInversion(tmpRoot.left);
 			treeInversion(tmpRoot.right);
+			
 		}
 		
 	}

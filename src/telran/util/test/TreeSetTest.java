@@ -2,6 +2,8 @@ package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,5 +49,22 @@ public class TreeSetTest extends SortedSetTest {
 	@Test
 	void heightTest() {
 		assertEquals(4, treeSet.height());
+	}
+	@Test
+	void sortedSequenceTreeTest() {
+		TreeSet<Integer> treeSet = new TreeSet<>();
+		int[] sortedArray = new Random().ints().distinct()
+				.limit(N_ELEMENTS).sorted().toArray();
+		transformArray(sortedArray);
+		for(int num: sortedArray) {
+			treeSet.add(num);
+		}
+		assertEquals(20, treeSet.height());
+		assertEquals((N_ELEMENTS + 1) / 2, treeSet.width());
+		
+	}
+	private void transformArray(int[] sortedArray) {
+		// TODO Auto-generated method stub
+		
 	}
 }
