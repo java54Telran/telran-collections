@@ -38,6 +38,7 @@ public class TreeSetTest extends SortedSetTest {
 		treeSet.setSpacesPerLevel(4);
 		treeSet.displayTreeRotated();
 	}
+	
 	@Test
 	void widthTest() {
 		assertEquals(2, treeSet.width());

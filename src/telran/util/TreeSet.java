@@ -44,6 +44,7 @@ private class TreeSetIterator implements Iterator<T> {
 	
 }
 private static final int DEFAULT_SPACES_PER_LEVEL = 2;
+private static final int SEPARATOR_LENGTH = 20;
 	Node<T> root;
 	private Comparator<T> comp;
 	private int spacesPerLevel = DEFAULT_SPACES_PER_LEVEL;
@@ -240,8 +241,8 @@ private static final int DEFAULT_SPACES_PER_LEVEL = 2;
 	 *  or null if there is no such element
 	 */
 	public T floor(T key) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return floorCeiling(key, true);
 	}
 	@Override
 	/**
@@ -250,8 +251,21 @@ private static final int DEFAULT_SPACES_PER_LEVEL = 2;
 	 *  or null if there is no such element
 	 */
 	public T ceiling(T key) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return floorCeiling(key, false);
+	}
+	private T floorCeiling(T key, boolean isFloor) {
+		T res = null;
+		int compRes = 0;
+		Node<T> current = root;
+		while (current != null && (compRes = comp.compare(key, current.data)) != 0) {
+			if ((compRes < 0 && !isFloor) || (compRes > 0 && isFloor)) {
+				res = current.data;
+			}
+			current = compRes < 0 ? current.left : current.right;
+		}
+		return current == null ? res : current.data;
+
 	}
 	/**
 	 * display tree in the following form:
@@ -262,14 +276,38 @@ private static final int DEFAULT_SPACES_PER_LEVEL = 2;
 	 *        100
 	 */
 	public void displayRootChildren() {
-		//TODO
+		System.out.printf("%s %s\n","ROOT->CHILDREN", "=".repeat(SEPARATOR_LENGTH));
+		displayRootChildren(root, 1);
+	}
+	private void displayRootChildren(Node<T> tmpRoot, int level) {
+		if(tmpRoot != null) {
+			displayRoot(tmpRoot, level);
+			displayRootChildren(tmpRoot.left, level + 1);
+			displayRootChildren(tmpRoot.right, level + 1);
+		}
+		
 	}
 	/*****************************************/
 	/**
 	 * conversion of tree so that iterating has been in the inversive order
 	 */
 	public void treeInversion() {
-		//TODO
+		comp = comp.reversed();
+		treeInversion(root);
+	}
+	private void treeInversion(Node<T> tmpRoot) {
+		if(tmpRoot != null) {
+			swapLeftRight(tmpRoot);
+			treeInversion(tmpRoot.left);
+			treeInversion(tmpRoot.right);
+		}
+		
+	}
+	private void swapLeftRight(Node<T> tmpRoot) {
+		Node<T> tmp = tmpRoot.left;
+		tmpRoot.left = tmpRoot.right;
+		tmpRoot.right = tmp;
+		
 	}
 	/**
 	 * displays tree in the following form
@@ -280,6 +318,7 @@ private static final int DEFAULT_SPACES_PER_LEVEL = 2;
 	 *   -20           
 	 */
 	public void displayTreeRotated() {
+		System.out.printf("%s %s\n","ROTATED on -90 degrees", "=".repeat(SEPARATOR_LENGTH));
 		displayTreeRotated(root, 1);
 	}
 	private void displayTreeRotated(Node<T> tmpRoot, int level) {
