@@ -102,6 +102,7 @@ public abstract class CollectionTest {
 			actual[index++] = num;
 		}
 		assertEquals(N_ELEMENTS, index);
+		
 		if(collection instanceof List) {
 			System.out.println("Performance test of method \"contains\" for all List objects takes huge time");
 		} else {
@@ -111,7 +112,7 @@ public abstract class CollectionTest {
 		}
 		
 	}
-	private void createBigRandomCollection(Random random) {
+	protected void createBigRandomCollection(Random random) {
 		int[] randomNumbers = random.ints().distinct().limit(N_ELEMENTS).toArray();
 		for(Integer num: numbers) {
 			collection.remove(num);
@@ -139,5 +140,6 @@ public abstract class CollectionTest {
 		createBigRandomCollection(new Random());
 		collection.clear();
 	}
+	
 	
 }

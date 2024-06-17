@@ -59,12 +59,26 @@ public class TreeSetTest extends SortedSetTest {
 		for(int num: sortedArray) {
 			treeSet.add(num);
 		}
+		balancedTreeTest(treeSet);
+		
+	}
+	private void balancedTreeTest(TreeSet<Integer> treeSet) {
 		assertEquals(20, treeSet.height());
 		assertEquals((N_ELEMENTS + 1) / 2, treeSet.width());
-		
 	}
 	private void transformArray(int[] sortedArray) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Test
+	void balanceTreeTest() {
+		createBigRandomCollection(new Random());
+		treeSet.balance();
+		balancedTreeTest(treeSet);
+		int index = 0;
+		for(Integer num: treeSet) {
+			index++;
+		}
+		assertEquals(treeSet.size(), index);
 	}
 }
