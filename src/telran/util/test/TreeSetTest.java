@@ -67,8 +67,25 @@ public class TreeSetTest extends SortedSetTest {
 		assertEquals((N_ELEMENTS + 1) / 2, treeSet.width());
 	}
 	private void transformArray(int[] sortedArray) {
-		// TODO Auto-generated method stub
+		int [] balanceOrderedArray = new int[sortedArray.length];
+		int [] indexRef = {0};
+		transformArray(balanceOrderedArray, sortedArray,
+				indexRef, 0, sortedArray.length - 1);
+		System.arraycopy(balanceOrderedArray, 0,
+				sortedArray, 0, N_ELEMENTS);
 		
+	}
+	private void transformArray(int[] balanceOrderedArray, int[] sortedArray,
+			int[] indexRef, int left, int right) {
+		if (left <= right) {
+			int indexRoot = (left + right) / 2;
+			int index = indexRef[0];
+			balanceOrderedArray[index] = sortedArray[indexRoot];
+			indexRef[0]++;
+			transformArray(balanceOrderedArray, sortedArray, indexRef, left, indexRoot - 1);
+			transformArray(balanceOrderedArray, sortedArray, indexRef, indexRoot + 1,
+					right);
+		}
 	}
 	@Test
 	void balanceTreeTest() {
@@ -79,6 +96,6 @@ public class TreeSetTest extends SortedSetTest {
 		for(Integer num: treeSet) {
 			index++;
 		}
-		assertEquals(treeSet.size(), index);
+		assertEquals(N_ELEMENTS, index);
 	}
 }
