@@ -2,10 +2,24 @@ package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class LinkedHashMapTest extends AbstractMapTest {
+import telran.util.LinkedHashMap;
 
-	//TODO in setUp there will be created LinkedHashMap
+class LinkedHashMapTest extends AbstractMapTest {
+	@Override
+	@BeforeEach
+	void setUp() {
+		map = new LinkedHashMap<>();
+		super.setUp();
+	}
+	@Override
+	protected <T> void sort(T[] expected, T[] actual) {
+		// keeps order neither expected nor actual should be sorted
+		
+	}
+
+	
 
 }
