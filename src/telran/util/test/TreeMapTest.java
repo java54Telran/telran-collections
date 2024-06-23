@@ -49,5 +49,16 @@ class TreeMapTest extends AbstractMapTest {
 		assertEquals(-1, treeMap.floorKey(1));
 		
 	}
+	@Override
+	@Test
+	void valuesTest() {
+		Integer [] expected = {400, 1, 9, 16, 100, 400   };
+		Integer [] actual = new Integer[expected.length];
+		int index = 0;
+		for(Integer num: treeMap.values()) {
+			actual[index++] = num;
+		}
+		assertArrayEquals(expected, actual);
+	}
 
 }
