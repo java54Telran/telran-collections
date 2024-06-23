@@ -65,6 +65,18 @@ abstract class AbstractMapTest {
 	 };
 	 runIterableTest(expected, entrySet);
  }
+ @Test
+ void keySetTest() {
+	// 
+	 Integer [] expected = {-1, 4, 20, 3, -20, 10};
+	 runIterableTest(expected, map.keySet());
+ }
+ @Test
+ void valuesTest() {
+	// 
+	 Integer [] expected = {1, 16, 400, 9, 400, 100};
+	 runIterableTest(expected, map.values());
+ }
  protected <T> void runIterableTest(T[] expected, Iterable<T> iterable) {
 		T[] actual = Arrays.copyOf(expected, expected.length);
 		int index = 0;
