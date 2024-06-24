@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import telran.util.LinkedList.Node;
 
-public class LinkedHashSet<T> extends AbstractCollection<T> implements Set<T> {
+public class LinkedHashSet<T>  implements Set<T> {
 	HashMap<T, Node<T>> map = new HashMap<>();
 	LinkedList<T> list = new LinkedList<>();
 	private class LinkedHashSetIterator implements Iterator<T> {
@@ -25,7 +25,6 @@ public class LinkedHashSet<T> extends AbstractCollection<T> implements Set<T> {
 		public void remove() {
 			it.remove();
 			map.remove(iterated);
-			size--;
 		}
 		
 	}
@@ -43,7 +42,7 @@ public class LinkedHashSet<T> extends AbstractCollection<T> implements Set<T> {
 			res = true;
 			Node<T> node = new Node<T>(obj);
 			map.put(obj, node);
-			list.addNode(size++, node);
+			list.addNode(list.size(), node);
 		}
 		return res;
 	}
@@ -56,7 +55,6 @@ public class LinkedHashSet<T> extends AbstractCollection<T> implements Set<T> {
 			res = true;
 			list.removeNode(node);
 			map.remove(pattern);
-			size--;
 		}
 		
 		return res;
@@ -72,6 +70,12 @@ public class LinkedHashSet<T> extends AbstractCollection<T> implements Set<T> {
 	public Iterator<T> iterator() {
 		
 		return new LinkedHashSetIterator();
+	}
+
+	@Override
+	public int size() {
+		
+		return list.size();
 	}
 
 }
